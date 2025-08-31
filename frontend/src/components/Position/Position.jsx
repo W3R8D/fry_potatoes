@@ -43,9 +43,11 @@ const Position = () => {
         axios.get(`${process.env.REACT_APP_API_URL}positions`).then((res) => {
             const _positions = res.data.positions;
             //check if length large than 0 => disabled navbar
-            if (_positions.length > 1) {
-                setNavbar("none");
-                setButton(true);
+            console.log("_positions: ", _positions);
+
+            if (_positions.length > 0) {
+                // setNavbar("none");
+                // setButton(true);
                 let newPosition = [];
                 _positions.map(item => {
                     if (item.parentId === null) { // head of tree (top of hierarchy
@@ -56,6 +58,8 @@ const Position = () => {
                         newPosition.push({ description: item.description, parent: parentDescription });
                     }
                 });
+                console.log("newPosition: ", newPosition);
+
                 setPositions(newPosition);
                 setTitle("Positions (Hierarchy)");
             }
@@ -236,6 +240,7 @@ const Position = () => {
 
     // DFS algorithm to draw tree state
     const Node = function (key) {
+
         const children = tree.get(key);
         let toBeRendered = [];
         if (children !== undefined && children.length > 0) { // check if there exist children

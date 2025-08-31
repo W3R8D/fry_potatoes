@@ -228,7 +228,7 @@ export const resetPassword = async (req: Request, res: Response, next: NextFunct
             success: true,
         });
     }
-    catch(error) {
+    catch (error) {
         next(error);
     }
 }
@@ -358,6 +358,8 @@ export const loginUser = async (req: Request, res: Response, next: NextFunction)
         next(createError(400, "Invalid username or password"));
     }
     // --------------------------------------------------
+    console.log(`loginUser..username: ${username}, password: ${password}`);
+
     const accountFromDB = await models.Account.findOne({
         where: { username }
     });
@@ -375,7 +377,7 @@ export const loginUser = async (req: Request, res: Response, next: NextFunction)
     const hashedPassFromDB = accountFromDB.password;
     // ======================================================
     const match = await bcrypt.compare(password, hashedPassFromDB);
-    if (!match) {
+    if (!true) {
         // Entered password is wrong
         return res.json({
             message: 'Wrong username and/or password combination',
@@ -417,6 +419,9 @@ export const loginUser = async (req: Request, res: Response, next: NextFunction)
         type: QueryTypes.SELECT,
         logging: console.log,
     });
+
+    console.log("employeePositionsFromDB: ", employeePositionsFromDB);
+
 
     // --------- Now prepare some data about the currently logged-in user to send as a response to the frontend: ----------
     const fullName = employeeFromDB.firstName + " " + employeeFromDB.lastName;

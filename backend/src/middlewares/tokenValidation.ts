@@ -66,9 +66,14 @@ const checkEmpPosIdValidity = (req: Request, res: Response, decodedToken: any) =
 
     const employeeCurrentPositionId: number = Number(req.header("employeeCurrentPositionId"));
 
+    console.log("employeeCurrentPositionId: ", employeeCurrentPositionId);
+
     const found = decodedToken?.allEmployeePositions.find(
         (empPos: any) => +empPos.id === +employeeCurrentPositionId
     );
+
+    console.log("found: ", found);
+
 
     if (!found) {
         console.log("Unauthorized! The employee's current position ID in the request header is invalid!");

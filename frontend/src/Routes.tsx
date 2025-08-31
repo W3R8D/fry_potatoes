@@ -52,8 +52,8 @@ const AppRoutes = (props: Props) => {
 
 
     const ROLES = {
-        'Employee': "employee",
-        'Admin': "admin",
+        'Employee': "EMPLOYEE",
+        'Admin': "ADMIN",
     }
     // const ROLES = {
     //   'User': 2001,
@@ -86,7 +86,7 @@ const AppRoutes = (props: Props) => {
                         element={<ManageEmployeePositions />}
                     />
 
-                    
+
                     <Route path="/chat" element={<ChatAuth />} />
                     <Route path="/chat/home" element={<ChatPage />} />
                 </Route>

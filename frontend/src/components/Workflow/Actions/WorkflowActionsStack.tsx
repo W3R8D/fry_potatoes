@@ -72,7 +72,8 @@ const WorkflowActionsStack = () => {
     const [forbidden, setForbidden] = useState<Boolean>(true);
     const [message, setMessage] = useState<string>("");
     const newActionRef: React.RefObject<any> = useRef<any>(null);
-    const componentRef: React.RefObject<any> = useRef<any>(null); //to print the page
+    //const componentRef: React.RefObject<any> = useRef<any>(null); //to print the page
+    const componentRef = useRef<HTMLDivElement>(null);
 
     useEffect((): ReturnType<EffectCallback> => {
         let mounted = true;
@@ -85,7 +86,9 @@ const WorkflowActionsStack = () => {
     }, []);
 
     const handlePrint = useReactToPrint({
-        content: () => componentRef.current,
+        contentRef: componentRef,        // v3 option
+        documentTitle: 'My Document',     // optional
+        // onBeforePrint, onAfterPrint, pageStyle, etc.
     });
 
     const handleCloseHelpDialog = () => {
@@ -100,7 +103,7 @@ const WorkflowActionsStack = () => {
     const moveToArchive = () => {
         let isMoveTo = true;
         axiosInstance().patch(`/workflow/table/moveToOrFromArchive?isMoveTo=${isMoveTo}`, {
-            actionsIds: [cameFromActionId], 
+            actionsIds: [cameFromActionId],
         }).then((response: any) => {
             console.log(response.data);
             dispatch(setSnackbar({
